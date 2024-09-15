@@ -1,7 +1,7 @@
 # Networking in Swift with Completion Handlers
 
 ## URL Session
-1- ```URLSession.shared.datatask ``` creates a task that retrieves the contents of a url request and then executes a call back upon completion.
+1- ```URLSession.shared.datatask ``` creates a **susbended** task that retrieves the contents of a url request and then executes a call back upon completion.
 2- Completion handlers are a call back from the API that begins whenever the call request concludes.
 3- This code executes asynchronously or non-sequentially as we don't know the execution time of the API request, and therefore must be executed on a `background thread`.
 4- Data returns as JSON (JavaScript Object Notation) is a lightweight, text-based format for storing and exchanging data. 
@@ -61,3 +61,36 @@ In Swift, `try`, `do`, and `catch` are used to handle errors in a controlled man
 When you create a reference to an object in another object, in swift, this automatically results in strong reference.
 Strong references mean that the 2 objects will keep eachother alive in memory even when one is destroyed. 
 This leads to memory leaks, waisted memory, unexpected behavior and poor performance.
+
+### Example 
+
+```
+private let urlString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false&price_change_percentage=24h&locale=en"
+    
+    func fetchCoinsWithResult(completion: @escaping(Result<[Coin], APError>) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Debug: Error \(error.localizedDescription)")
+                completion(.failure(.unknownError(description: error.localizedDescription)))
+            }
+            
+            guard let httpResponse = response else {
+                completion(.failure(.requestFailed(description: "Request Failed")))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(.invalidData))
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode([Coin].self, from: data)
+                completion(.success(response))
+            } catch { //we get access to error inside the catch block by default
+                print("Debug: Failed to decode object \(error)")
+                completion(.failure(.jsonParsingFailure))
+            }
+        }.resume()
+```
