@@ -11,7 +11,7 @@ import SwiftUI
 struct Coins_iOSApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(service: NetworkManager())
         }
     }
 }
