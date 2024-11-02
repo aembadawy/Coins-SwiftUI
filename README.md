@@ -30,6 +30,7 @@ The `Result` type is an enum with two cases:
 1. **`success`**: Represents a successful operation and holds an associated value of the result type.
 2. **`failure`**: Represents a failed operation and holds an associated error value.
 
+
 #### Syntax
 
 ```swift
