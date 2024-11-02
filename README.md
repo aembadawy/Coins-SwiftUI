@@ -30,6 +30,7 @@ The `Result` type is an enum with two cases:
 1. **`success`**: Represents a successful operation and holds an associated value of the result type.
 2. **`failure`**: Represents a failed operation and holds an associated error value.
 
+
 #### Syntax
 
 ```swift
@@ -41,7 +42,7 @@ enum Result<Success, Failure: Error> {
 
 - `Success`: The type of the value that is returned if the operation succeeds.
 - `Failure`: The type of the error that is returned if the operation fails. It must conform to the `Error` protocol.
-- 
+
 #### Key Points
 
 - **Type Safety**: The `Result` type enforces type safety by requiring explicit handling of both success and failure cases.
@@ -94,3 +95,21 @@ private let urlString = "https://api.coingecko.com/api/v3/coins/markets?vs_curre
             }
         }.resume()
 ```
+
+Sure! Here’s a polished version of your caching section:
+
+---
+
+## Caching
+
+Caching allows us to store information that doesn’t change frequently, reducing the need to fetch data from the network on every user interaction. 
+
+### Why Use Caching?
+- **Cost-Effective**: Retrieving cached data is less expensive than making network calls.
+- **Reduced Network Calls**: Caching minimizes the number of requests sent to the server, which can improve performance and decrease load on the network.
+- **Speed**: Accessing cached data is generally faster than retrieving it from the network.
+- **Battery Efficiency**: Fewer network calls mean less battery consumption, enhancing the user experience.
+
+### What Are the Trade-offs?
+- **Memory Usage**: Caching takes up space on the device. We need to implement caching policies to manage this effectively and avoid excessive memory use.
+- **Stale Data**: Cached information can become outdated. To address this, we may need to implement logic to refresh data after a certain period or use techniques like Least Recently Used (LRU) to manage cache entries effectively.
