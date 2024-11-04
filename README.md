@@ -96,10 +96,6 @@ private let urlString = "https://api.coingecko.com/api/v3/coins/markets?vs_curre
         }.resume()
 ```
 
-Sure! Here’s a polished version of your caching section:
-
----
-
 ## Caching
 
 Caching allows us to store information that doesn’t change frequently, reducing the need to fetch data from the network on every user interaction. 
